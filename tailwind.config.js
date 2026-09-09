@@ -8,7 +8,6 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        lime: { DEFAULT: "var(--primary)", foreground: "var(--primary-foreground)" }, 
         card: {
           DEFAULT: "var(--card)",
           foreground: "var(--card-foreground)",
@@ -40,11 +39,39 @@ module.exports = {
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
+        sidebar: {
+          DEFAULT: "var(--sidebar)",
+          foreground: "var(--sidebar-foreground)",
+          primary: "var(--sidebar-primary)",
+          "primary-foreground": "var(--sidebar-primary-foreground)",
+          accent: "var(--sidebar-accent)",
+          "accent-foreground": "var(--sidebar-accent-foreground)",
+          border: "var(--sidebar-border)",
+        },
+        chart: {
+          1: "var(--chart-1)",
+          2: "var(--chart-2)",
+          3: "var(--chart-3)",
+          4: "var(--chart-4)",
+          5: "var(--chart-5)",
+        },
+        // Aliases / semantic helpers
+        lime: {
+          DEFAULT: "var(--lime)",
+          foreground: "var(--lime-foreground)",
+        },
         emerald: "var(--emerald)",
         red: "var(--red)",
+        amber: "var(--amber)",
       },
       borderRadius: {
-        "2xl": "1rem",
+        // Web scale: base 0.9rem
+        sm: "0.65rem",
+        md: "0.75rem",
+        lg: "0.9rem",
+        xl: "1.05rem",
+        "2xl": "1.2rem",
+        "3xl": "1.5rem",
       },
     },
   },

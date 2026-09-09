@@ -2,34 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------
+   Design tokens — ported 1:1 from web app (paktest-prep)
+   --------------------------------------------------------- */
 @layer base {
   :root {
-    --background: #f8f8f5;
-    --foreground: #0a0a0a;
-    --lime: #a3e635;
-    --lime-foreground: #0a0a0a;
-    --emerald: #10b981;
-    --red: #ef4444;
-    --amber: #f59e0b;
-    --muted: #f0f0ec;
-    --muted-foreground: #6b7280;
-    --card: #ffffff;
-    --card-foreground: #0a0a0a;
-    --border: #e5e5e0;
+    --background: #F4F4F2;
+    --foreground: #0A0A0A;
+
+    --card: #FFFFFF;
+    --card-foreground: #0A0A0A;
+
+    --popover: #FFFFFF;
+    --popover-foreground: #0A0A0A;
+
+    --primary: #C6F432;
+    --primary-foreground: #0A0A0A;
+
+    --secondary: #ECECEA;
+    --secondary-foreground: #0A0A0A;
+
+    --muted: #ECECEA;
+    --muted-foreground: #6B6B6B;
+
+    --accent: #E4E4E1;
+    --accent-foreground: #0A0A0A;
+
+    --destructive: #DC2626;
+    --destructive-foreground: #FFFFFF;
+
+    --border: #E3E3E0;
+    --input: #E3E3E0;
+    --ring: #C6F432;
+
+    --sidebar: #FAFAF8;
+    --sidebar-foreground: #0A0A0A;
+    --sidebar-primary: #C6F432;
+    --sidebar-primary-foreground: #0A0A0A;
+    --sidebar-accent: #ECECEA;
+    --sidebar-accent-foreground: #0A0A0A;
+    --sidebar-border: #E3E3E0;
+
+    --chart-1: #C6F432;
+    --chart-2: #38BDF8;
+    --chart-3: #0A0A0A;
+    --chart-4: #6B6B6B;
+    --chart-5: #DC2626;
+
+    /* Semantic helpers (quiz / review screens) */
+    --emerald: #10B981;
+    --red: #EF4444;
+    --amber: #F59E0B;
+
+    /* Alias so legacy `bg-lime` classes still work */
+    --lime: #C6F432;
+    --lime-foreground: #0A0A0A;
+
+    --radius: 0.9rem;
   }
 
   .dark {
     --background: #000000;
-    --foreground: #f8f8f5;
-    --lime: #a3e635;
-    --lime-foreground: #0a0a0a;
-    --emerald: #10b981;
-    --red: #ef4444;
-    --amber: #f59e0b;
-    --muted: #1a1a1a;
-    --muted-foreground: #9ca3af;
-    --card: #0a0a0a;
-    --card-foreground: #f8f8f5;
+    --foreground: #F5F5F5;
+
+    --card: #101010;
+    --card-foreground: #F5F5F5;
+
+    --popover: #101010;
+    --popover-foreground: #F5F5F5;
+
+    --primary: #C6F432;
+    --primary-foreground: #0A0A0A;
+
+    --secondary: #1A1A1A;
+    --secondary-foreground: #F5F5F5;
+
+    --muted: #1A1A1A;
+    --muted-foreground: #9C9C9C;
+
+    --accent: #232323;
+    --accent-foreground: #F5F5F5;
+
+    --destructive: #EF4444;
+    --destructive-foreground: #FFFFFF;
+
     --border: #262626;
+    --input: #262626;
+    --ring: #C6F432;
+
+    --sidebar: #050505;
+    --sidebar-foreground: #F5F5F5;
+    --sidebar-primary: #C6F432;
+    --sidebar-primary-foreground: #0A0A0A;
+    --sidebar-accent: #1A1A1A;
+    --sidebar-accent-foreground: #F5F5F5;
+    --sidebar-border: #262626;
+
+    --chart-1: #C6F432;
+    --chart-2: #38BDF8;
+    --chart-3: #F5F5F5;
+    --chart-4: #9C9C9C;
+    --chart-5: #EF4444;
+
+    /* Semantic helpers */
+    --emerald: #10B981;
+    --red: #EF4444;
+    --amber: #F59E0B;
+
+    --lime: #C6F432;
+    --lime-foreground: #0A0A0A;
+
+    --radius: 0.9rem;
   }
 }
