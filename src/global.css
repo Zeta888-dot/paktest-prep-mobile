@@ -1,9 +1,35 @@
-:root {
-  --font-display:
-    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #f8f8f5;
+    --foreground: #0a0a0a;
+    --lime: #a3e635;
+    --lime-foreground: #0a0a0a;
+    --emerald: #10b981;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --muted: #f0f0ec;
+    --muted-foreground: #6b7280;
+    --card: #ffffff;
+    --card-foreground: #0a0a0a;
+    --border: #e5e5e0;
+  }
+
+  .dark {
+    --background: #000000;
+    --foreground: #f8f8f5;
+    --lime: #a3e635;
+    --lime-foreground: #0a0a0a;
+    --emerald: #10b981;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --muted: #1a1a1a;
+    --muted-foreground: #9ca3af;
+    --card: #0a0a0a;
+    --card-foreground: #f8f8f5;
+    --border: #262626;
+  }
 }
