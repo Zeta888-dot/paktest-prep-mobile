@@ -1,33 +1,71 @@
 import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
+import { View } from "react-native";
+import {
+  LayoutDashboard,
+  FileText,
+  Bookmark,
+  Upload,
+  Settings as SettingsIcon,
+} from "lucide-react-native";
 import { Colors } from "../../constants/theme";
 
-type IoniconName = React.ComponentProps<typeof Ionicons>["name"];
+type IconComponent = typeof LayoutDashboard;
 
-function TabIcon({ name, focused, color }: { name: IoniconName; focused: boolean; color: string }) {
-  // Web jaisa behavior: active icon filled, inactive outline
-  const filled = name.replace("-outline", "") as IoniconName;
-  return <Ionicons name={focused ? filled : name} size={22} color={color} />;
+function TabIcon({
+  Icon,
+  focused,
+  isDark,
+  theme,
+}: {
+  Icon: IconComponent;
+  focused: boolean;
+  isDark: boolean;
+  theme: (typeof Colors)["light"];
+}) {
+  const pillBg = isDark ? theme.primary : theme.foreground;
+  const activeIconColor = isDark ? theme.primaryForeground : theme.background;
+
+  return (
+    <View
+      className="items-center justify-center"
+      style={{
+        height: 32,
+        width: 32,
+        borderRadius: 16,
+        backgroundColor: focused ? pillBg : "transparent",
+      }}
+    >
+      <Icon
+        size={19}
+        color={focused ? activeIconColor : theme.mutedForeground}
+        strokeWidth={focused ? 2.3 : 2}
+      />
+    </View>
+  );
 }
 
 export default function TabsLayout() {
   const { colorScheme } = useColorScheme();
-  const theme = Colors[colorScheme === "dark" ? "dark" : "light"];
+  const isDark = colorScheme === "dark";
+  const theme = Colors[isDark ? "dark" : "light"];
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.primary,
+        tabBarActiveTintColor: isDark ? theme.primary : theme.foreground,
         tabBarInactiveTintColor: theme.mutedForeground,
         tabBarStyle: {
           backgroundColor: theme.sidebar,
           borderTopColor: theme.border,
           borderTopWidth: 1,
+          height: 60,
+          paddingBottom: 8,
+          paddingTop: 6,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 10.5,
           fontWeight: "600",
         },
       }}
@@ -35,27 +73,18 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          title: "Dashboard",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon Icon={LayoutDashboard} focused={focused} isDark={isDark} theme={theme} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="tests"
+        options={{
           title: "Tests",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="document-text-outline" focused={focused} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="upload"
-        options={{
-          title: "Upload",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="cloud-upload-outline" focused={focused} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="forum"
-        options={{
-          title: "Forum",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="chatbubbles-outline" focused={focused} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon Icon={FileText} focused={focused} isDark={isDark} theme={theme} />
           ),
         }}
       />
@@ -63,8 +92,17 @@ export default function TabsLayout() {
         name="saved"
         options={{
           title: "Saved",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="bookmark-outline" focused={focused} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon Icon={Bookmark} focused={focused} isDark={isDark} theme={theme} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="upload"
+        options={{
+          title: "Upload",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon Icon={Upload} focused={focused} isDark={isDark} theme={theme} />
           ),
         }}
       />
@@ -72,8 +110,8 @@ export default function TabsLayout() {
         name="settings"
         options={{
           title: "Settings",
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="settings-outline" focused={focused} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon Icon={SettingsIcon} focused={focused} isDark={isDark} theme={theme} />
           ),
         }}
       />

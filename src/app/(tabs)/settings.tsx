@@ -1,14 +1,92 @@
 import { useEffect, useState } from "react";
 import {
-    Alert,
-    Appearance,
-    Pressable,
-    ScrollView,
-    Text,
-    TextInput,
-    View,
+  Alert,
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
+import { LogOut } from "lucide-react-native";
 import { Theme, useSettings } from "../../store/settings";
+import { useAuth } from "../../store/auth";
+import { useHistory } from "../../store/history";
+import { useGoogleSignIn } from "../../hooks/use-google-signin";
+
+function AccountCard() {
+  const user = useAuth((s) => s.user);
+  const signingIn = useAuth((s) => s.signingIn);
+  const signOutStore = useAuth((s) => s.signOut);
+  const { signIn, error } = useGoogleSignIn();
+
+  const signOut = () => {
+    Alert.alert("Sign out", "Aap dono devices par sync khona chahte hain?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Sign out",
+        style: "destructive",
+        onPress: async () => {
+          await signOutStore();
+          await useHistory.getState().load();
+        },
+      },
+    ]);
+  };
+
+  if (user) {
+    return (
+      <View className="mt-6 rounded-2xl border border-border bg-card p-4 flex-row items-center gap-3">
+        {user.image ? (
+          <Image source={{ uri: user.image }} className="h-11 w-11 rounded-full" />
+        ) : (
+          <View className="h-11 w-11 items-center justify-center rounded-full bg-primary">
+            <Text className="text-base font-bold text-primary-foreground">
+              {(user.name ?? user.email).charAt(0).toUpperCase()}
+            </Text>
+          </View>
+        )}
+        <View className="flex-1">
+          <Text className="font-semibold text-foreground" numberOfLines={1}>
+            {user.name ?? "Signed in"}
+          </Text>
+          <Text className="text-xs text-muted-foreground" numberOfLines={1}>
+            {user.email}
+          </Text>
+        </View>
+        <Pressable onPress={signOut} className="rounded-full p-2">
+          <LogOut size={18} color="#EF4444" />
+        </Pressable>
+      </View>
+    );
+  }
+
+  return (
+    <View className="mt-6 rounded-2xl border border-border bg-card p-4">
+      <Pressable
+        onPress={signIn}
+        disabled={signingIn}
+        className="flex-row items-center justify-center gap-2.5 rounded-xl border border-border py-3.5"
+      >
+        {signingIn ? (
+          <ActivityIndicator size="small" />
+        ) : (
+          <>
+            <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
+              <LogOut size={12} color="#0A0A0A" style={{ transform: [{ rotate: "180deg" }] }} />
+            </View>
+            <Text className="font-semibold text-foreground">Sign in with Google</Text>
+          </>
+        )}
+      </Pressable>
+      <Text className="mt-2 text-center text-[10px] text-muted-foreground">
+        Sync your progress with the web app
+      </Text>
+      {error && <Text className="mt-2 text-center text-xs text-red-500">{error}</Text>}
+    </View>
+  );
+}
 
 export default function Settings() {
   const loaded = useSettings((s) => s.loaded);
@@ -70,7 +148,9 @@ export default function Settings() {
       <View className="px-5 pt-6">
         <Text className="text-2xl font-bold text-foreground">Settings</Text>
 
-        <View className="mt-6 rounded-2xl border border-border bg-card p-5">
+        <AccountCard />
+
+        <View className="mt-4 rounded-2xl border border-border bg-card p-5">
           <Text className="text-lg font-semibold text-foreground">Profile</Text>
           <TextInput
             value={nameInput}
@@ -84,6 +164,9 @@ export default function Settings() {
         <View className="mt-4 rounded-2xl border border-border bg-card p-5">
           <Text className="text-lg font-semibold text-foreground">
             Gemini API Key
+          </Text>
+          <Text className="mt-1 text-xs text-muted-foreground">
+            Optional — questions generate via our server by default
           </Text>
           <TextInput
             value={apiKeyInput}
@@ -128,10 +211,7 @@ export default function Settings() {
             {(["dark", "light", "system"] as Theme[]).map((t) => (
               <Pressable
                 key={t}
-                onPress={() => {
-                  if (t !== "system") Appearance.setColorScheme(t);
-                  update({ theme: t });
-                }}
+                onPress={() => update({ theme: t })}
                 className={`flex-1 rounded-xl border p-3 items-center ${theme === t ? "border-primary bg-primary" : "border-border bg-background"}`}
               >
                 <Text

@@ -3,6 +3,9 @@ import { useColorScheme } from "nativewind";
 import { useEffect } from "react";
 import "../global.css";
 import { useSettings } from "../store/settings";
+import { useHistory } from "../store/history";
+import { useAuth } from "../store/auth";
+import { useBookmarks } from "../store/bookmarks";
 
 export default function RootLayout() {
   const load = useSettings((s) => s.load);
@@ -10,9 +13,19 @@ export default function RootLayout() {
   const loaded = useSettings((s) => s.loaded);
   const { setColorScheme } = useColorScheme();
 
+  const loadHistory = useHistory((s) => s.load);
+  const loadAuth = useAuth((s) => s.load);
+  const loadBookmarks = useBookmarks((s) => s.load);
+
   useEffect(() => {
-    load();
-  }, [load]);
+    async function boot() {
+      await loadAuth();
+      await load();
+      await loadHistory();
+      await loadBookmarks();
+    }
+    boot();
+  }, [loadAuth, load, loadHistory, loadBookmarks]);
 
   useEffect(() => {
     if (loaded) {
